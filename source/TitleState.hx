@@ -53,8 +53,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		
+	#if desktop
 	directories = [];
-	
 	for (i in FileSystem.readDirectory("mods")){
 		
 		if (!i.contains(".") && i != "introMod"){
@@ -62,7 +63,8 @@ class TitleState extends MusicBeatState
 			trace(i);
 		}
 	}
-
+        #end
+		
 		OptionUtils.bindSave();
 		OptionUtils.loadOptions(OptionUtils.options);
 		PlayerSettings.init();
@@ -101,7 +103,7 @@ class TitleState extends MusicBeatState
 		}
 		if (FlxG.save.data.volume == null) FlxG.save.data.volume = 1;
 		FlxG.sound.volume = FlxG.save.data.volume;
-introSong = openfl.media.Sound.fromFile(Paths.music('freakyMenu'));
+                introSong = openfl.media.Sound.fromFile(Paths.music('freakyMenu'));
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -276,7 +278,7 @@ introSong = openfl.media.Sound.fromFile(Paths.music('freakyMenu'));
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-		#if mobile
+		#if android
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.justPressed)
